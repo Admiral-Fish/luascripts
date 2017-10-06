@@ -1,0 +1,1 @@
+Just a dump of various RNG/brute force bots I have made. Instructions should mostly be included in each lua file.

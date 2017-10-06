@@ -1,5 +1,3 @@
---Author: Admiral_Fish
-
 desiredTarget=01373
 
 initialState=savestate.create()

@@ -1,3 +1,6 @@
+-- Do note this has a tendency to flash the screen like crazy
+-- Be careful if flashing screens is an issue for you
+
 desiredTarget=01373
 
 initialState=savestate.create()

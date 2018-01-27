@@ -1,4 +1,4 @@
---Modified version of gsc_stationary.lua by AgentKazy
+--Modified version of wwwwwwzx's gsc_stationary.lua by AgentKazy
 local pause = 1 -- Set to 0 to disable emulator pause at shiny encounter
 --End of editing parameters
 local electrode = 101; local lapras = 131; local snorlax = 143; local sudowoodo = 185; local lugia = 249; local hooh = 250; local celebi = 251

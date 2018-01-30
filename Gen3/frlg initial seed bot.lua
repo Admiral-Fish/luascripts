@@ -15,13 +15,13 @@ maxFrame = 5000000
 
 --Don’t edit anything below this unless you know what you are doing
 
-rshift = bit.rshift
-lshift = bit.lshift
-band = bit.band
-mdword = memory.readdwordunsigned
+local rshift = bit.rshift
+local lshift = bit.lshift
+local band = bit.band
+local mdword = memory.readdwordunsigned
 
 --Function that does the LCRNG math
-function LCRNG(a)
+function LCRNG(s)
 	local a = 0x41C6 * band(s, 0xffff) + rshift(s, 16) * 0x4E6D
 	local b = 0x4E6D * band(s, 0xffff) + band(a, 0xffff) * 0x10000 + 0x6073
 	return b

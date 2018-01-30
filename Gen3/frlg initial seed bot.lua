@@ -1,5 +1,5 @@
 -- User Input
--- Please note the ìUse GBA BIOSî option must be unselected for this script to work properly
+-- Please note the ‚ÄúUse GBA BIOS‚Äù option must be unselected for this script to work properly
 -- Or the Disable BIOS INTRO option must be enabled
 -- This program work for both Fire Red and Leaf Green without any modification
 
@@ -13,8 +13,12 @@ maxFrame = 5000000
 
 
 
---Donít edit anything below this unless you know what you are doing
+--Don‚Äôt edit anything below this unless you know what you are doing
 
+rshift = bit.rshift
+lshift = bit.lshift
+band = bit.band
+mdword = memory.readdwordunsigned
 
 --Function that does the LCRNG math
 function LCRNG(a)
@@ -54,7 +58,7 @@ while targetHit == 0 do
 			emu.frameadvance()
 			a=a+1
 		end
-		baseSeed=memory.readwordunsigned(0x02020000)
+		baseSeed=mdword(0x02020000)
 		PRNG=baseSeed
 			
 		currentFrame = 0

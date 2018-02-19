@@ -20,13 +20,13 @@ local tid
 local sid
 local party
 
-if version == 0x50 then
-	if region == 0x45 then
-    party=0x03004360
-    wild=0x030045C0
-    tid=memory.readwordunsigned(0x02024EAE)
-    sid=memory.readwordunsigned(0x02024EB0)
-		print("USA Sapphire detected")
+if region == 0x45 then
+  if version == 0x50 || version == 0x56 then
+  party=0x03004360
+  wild=0x030045C0
+  tid=memory.readwordunsigned(0x02024EAE)
+  sid=memory.readwordunsigned(0x02024EB0)
+  print("USA Ruby/Sapphire detected")
 
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Sapphire detected")
@@ -35,13 +35,6 @@ if version == 0x50 then
 		print("JPN Sapphire detected")
 
 	end
-elseif version == 0x56 then
-	if region == 0x45 then
-    party=0x03004360
-    wild=0x030045C0
-    tid=memory.readwordunsigned(0x02024EAE)
-    sid=memory.readwordunsigned(0x02024EB0)
-		print("USA Ruby detected")
 
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Ruby detected")
@@ -64,11 +57,12 @@ elseif version == 0x45 then
 		print("JPN Emerald detected")
 
 	end
-elseif version == 0x52 then
-	if region == 0x45 then
+
+elseif region == 0x45 then
+  if version == 0x52 || version == 0x47 then
     party=0x02024284
     wild=0x0202402C
-		print("USA FireRed detected")
+		print("USA FireRed/LeafGreen detected")
 
 	elseif region == 0x49 then
 		print("ITA/FRE/GER FireRed detected")
@@ -77,11 +71,6 @@ elseif version == 0x52 then
 		print("JPN FireRed detected")
 
 	end
-elseif version == 0x47 then
-	if region == 0x45 then
-    --party=0x02024284
-    party=0x020241E4
-		print("USA LeafGreen detected")
 
 	elseif region == 0x49 then
 		print("ITA/FRE/GER LeafGreen detected")

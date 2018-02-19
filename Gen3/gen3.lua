@@ -51,7 +51,7 @@ elseif version == 0x45 then
 		print("JPN Emerald detected")
 	end
 elseif region == 0x45 then
-	if version == 0x52 || version == 0x47 then
+	if version == 0x52 or version == 0x47 then
 		party = 0x02024284
 		wild = 0x0202402C
 		print("USA FireRed/LeafGreen detected")

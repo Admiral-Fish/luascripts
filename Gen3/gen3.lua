@@ -16,6 +16,7 @@ local speciesArray = {"None","Bulbasaur","Ivysaur","Venusaur","Charmander","Char
 local band = bit.band
 local xor = bit.bxor
 local mdword = memory.readdwordunsigned
+local mword = memory.readwordunsigned
 
 local version = memory.readbyte(0x080000AE)
 local region = memory.readbyte(0x080000AF)
@@ -27,8 +28,8 @@ if region == 0x45 then
 	if version == 0x50 or version == 0x56 then
 		party = 0x03004360
 		wild = 0x030045C0
-		tid = memory.readwordunsigned(0x02024EAE)
-		sid = memory.readwordunsigned(0x02024EB0)
+		tid = mword(0x02024EAE)
+		sid = mword(0x02024EB0)
 		print("USA Ruby/Sapphire detected")
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Sapphire detected")
@@ -199,7 +200,7 @@ function partyview()
 end
 
 function wildview()
-	personality=memory.readwordunsigned(wild)
+	personality=mword(wild)
 	print("PID:  "..string.format("%08X", personality))
 	level = wild+84
 	trainerid = mdword(wild+4)

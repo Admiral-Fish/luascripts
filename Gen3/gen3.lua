@@ -48,7 +48,7 @@ elseif version == 0x45 then
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Emerald detected")
 	elseif region == 0x4A then
-		party=0x02024190
+		party = 0x02024190
 		print("JPN Emerald detected")
 	end
 elseif region == 0x45 then

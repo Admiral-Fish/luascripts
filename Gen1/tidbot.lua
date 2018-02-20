@@ -3,11 +3,14 @@ local desired_tid = {00666,12345,54321,31415,07770, 06660}
 local a_tid
 local tid
 
+local mbyte = memory.readbyte
+local mword = memory.readword
+
 function reverseword(w)
-    return (w % 256)*256+math.floor(w/256)
+    return (w % 256) * 256 + math.floor(w / 256)
 end
 
-local version = memory.readword(0x14e)
+local version = mword(0x14e)
 if version == 0xc1a2 or version == 0x36dc or version == 0xd5dd or version == 0x299c then
 	print("RBGY JPN game detected")
 	a_tid = 0xd2d8
@@ -32,17 +35,17 @@ end
 state = savestate.create()
 savestate.save(state)
 while true do
-	curr_tid=memory.readword(a_tid)
+	curr_tid = mword(a_tid)
 	emu.frameadvance()
 	savestate.save(state)
-	local tid = memory.readword(a_tid)
+	local tid = mword(a_tid)
 	x = 0
 	while x < 32 do
 		joypad.set(1, {A=true})
 		vba.frameadvance()
-		x=x+1
+		x = x + 1
 	end
-	tid = reverseword(memory.readword(a_tid))
+	tid = reverseword(mword(a_tid))
 	print(tid)
 
 	for tid_count = 1, table.getn(desired_tid) do

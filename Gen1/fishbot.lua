@@ -6,12 +6,15 @@
 --local target = 92
 local target
 
+local mword = memory.readword
+local mbyte = memory.readbyte
+
 --da confermare per giallo e rbg/giapponesi
 local a_flagbite = 0xcd3d
 
 local a_fished_species
 local ivs_addr
-local version = memory.readword(0x14e)
+local version = mword(0x14e)
 if version == 0xc1a2 or version == 0x36dc or version == 0xd5dd or version == 0x299c then
 	print("RBGY JAP detected")
 	a_fished_species = 0xd036
@@ -34,14 +37,14 @@ elseif version == 0x8f4e or version == 0xfb66 or version == 0x3756 or version ==
 	ivs_addr = 0xcff5
 else
 	print(string.format("unknown version, code: %4x", version))
-  print("script stopped")
-  return
+	print("script stopped")
+	return
 end
 
 local atkdef
 local spespc
 
-function shiny(atkdef,spespc)
+function shiny(atkdef, spespc)
 	if spespc == 0xAA then
 		if atkdef == 0x2A or atkdef == 0x3A or atkdef == 0x6A or atkdef == 0x7A or atkdef == 0xAA or atkdef == 0xBA or atkdef == 0xEA or atkdef == 0xFA then
 			return true
@@ -69,46 +72,45 @@ while true do
 	--aspettiamo i risultati della pesca
 	while i < 200 do
 		emu.frameadvance()
-		i = i+1
+		i = i + 1
 	end
-	fished = memory.readbyte(a_flagbite)
+	fished = mbyte(a_flagbite)
 	if fished == 0x2 then
 		print("You're fishing where there are no pokemon")
 		break
 	elseif fished == 0x1 then
 		--pescato qualcosa, vediamo se è la specie cercata
-		if memory.readbyte(a_fished_species) == target then
+		if mbyte(a_fished_species) == target then
 			savestate.save(state)
 			print("Species found, now searching for ivs")
 			i = 0;
 			--aspetta che finisca il dialogo
-			while i<210 do
+			while i < 210 do
 				joypad.set(1, {A=true})
 				emu.frameadvance()
-				i= i+1
+				i= i + 1
 			end
 			while true do
 				emu.frameadvance()
 				savestate.save(state)
 				atkdef = 0
 				spespc = 0
-				while memory.readbyte(0xc027)~=0xf0 do
-
+				while mbyte(0xc027) ~= 0xf0 do
 					joypad.set(1, {A=true})
 					emu.frameadvance()
-					atkdef = memory.readbyte(ivs_addr)
-					spespc = memory.readbyte(ivs_addr+1)
+					atkdef = mbyte(ivs_addr)
+					spespc = mbyte(ivs_addr + 1)
 				end
-				atkdef = memory.readbyte(ivs_addr)
-				spespc = memory.readbyte(ivs_addr+1)
+				atkdef = mbyte(ivs_addr)
+				spespc = mbyte(ivs_addr + 1)
 				print(atkdef)
 				print(spespc)
-				if shiny(atkdef,spespc) then
+				if shiny(atkdef, spespc) then
 					print("Shiny!!! Script stopped.")
-        				print(string.format("Atk: %d", math.floor(atkdef/16)))
-       					print(string.format("Def: %d", atkdef%16))
-       		 			print(string.format("Spe: %d", math.floor(spespc/16)))
-        				print(string.format("Spc: %d", spespc%16))
+					print(string.format("Atk: %d", math.floor(atkdef / 16)))
+					print(string.format("Def: %d", atkdef % 16))
+					print(string.format("Spe: %d", math.floor(spespc / 16)))
+					print(string.format("Spc: %d", spespc % 16))
 					return
 				else
 					print("Wrong ivs")
@@ -125,7 +127,4 @@ while true do
 		print("Nothing bited")
 		savestate.load(state)
 	end
-
-
-
 end

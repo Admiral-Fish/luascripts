@@ -1,4 +1,7 @@
-local version = memory.readword(0x14e)
+local mbyte = memory.readbyte
+local mword = memory.readword
+
+local version = mword(0x14e)
 local base_address
 local atkdef
 local spespc
@@ -24,12 +27,10 @@ else
 	return
 end
 
-local size = memory.readbyte(base_address)-1
-local dv_addr = (base_address+0x23)+size*0x2C
+local size = mbyte(base_address) - 1
+local dv_addr = (base_address + 0x23) + size * 0x2C
 
-
-
-function shiny(atkdef,spespc)
+function shiny(atkdef, spespc)
 	if spespc == 0xAA then
 		if atkdef == 0x2A or atkdef == 0x3A or atkdef == 0x6A or atkdef == 0x7A or atkdef == 0xAA or atkdef == 0xBA or atkdef == 0xEA or atkdef == 0xFA then
 			return true
@@ -45,23 +46,22 @@ state = savestate.create()
 savestate.save(state)
 
 while true do
-
 	emu.frameadvance()
 	savestate.save(state)
-	i=0
+	i = 0
 	while i < 20 do
 		joypad.set(1, {A=true})
 		vba.frameadvance()
-		i=i+1
+		i = i + 1
 	end
-	atkdef = memory.readbyte(dv_addr)
-	spespc = memory.readbyte(dv_addr+1)
-	if shiny(atkdef,spespc) then
+	atkdef = mbyte(dv_addr)
+	spespc = mbyte(dv_addr + 1)
+	if shiny(atkdef, spespc) then
 		print("Shiny!!! Script stopped.")
-		print(string.format("Atk: %d", math.floor(atkdef/16)))
-		print(string.format("Def: %d", atkdef%16))
-		print(string.format("Spe: %d", math.floor(spespc/16)))
-		print(string.format("Spc: %d", spespc%16))
+		print(string.format("Atk: %d", math.floor(atkdef / 16)))
+		print(string.format("Def: %d", atkdef % 16))
+		print(string.format("Spe: %d", math.floor(spespc / 16)))
+		print(string.format("Spc: %d", spespc % 16))
 		savestate.save(state)
 		break
 	else

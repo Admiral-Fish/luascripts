@@ -1,4 +1,3 @@
---rewritten /u/itsprofoak lua script, more compact code with automatic check version
 naturename={
 	"Hardy","Lonely","Brave","Adamant","Naughty",
 	"Bold","Docile","Relaxed","Impish","Lax",
@@ -6,6 +5,9 @@ naturename={
 	"Modest","Mild","Quiet","Bashful","Rash",
 	"Calm","Gentle","Sassy","Careful","Quirky"}
 
+local mbyte = memory.readbyte
+local mword = memory.readword
+	
 function shiny(atkdef,spespc)
 	if spespc == 0xAA then
 		if atkdef == 0x2A or atkdef == 0x3A or atkdef == 0x6A or atkdef == 0x7A or atkdef == 0xAA or atkdef == 0xBA or atkdef == 0xEA or atkdef == 0xFA then
@@ -18,7 +20,7 @@ function shiny(atkdef,spespc)
 	end
 end
 
-version = memory.readword(0x14e)
+version = mword(0x14e)
 if version == 0xc1a2 or version == 0x36dc or version == 0xd5dd or version == 0x299c then
 	print("RBGY JPN game detected")
 	partystart = 0xd12b
@@ -41,13 +43,13 @@ else
 end
 
 while true do
-	partysize = memory.readbyte(partystart-8)-1
+	partysize = mbyte(partystart - 8) - 1
 	
 	p = 1
-	for i = (partystart+0xe),(partystart+ 0xe +partysize*0x2c),0x2c do
-		pexp =  0x10000*memory.readbyte(i)+0x100*memory.readbyte(i+1) + memory.readbyte(i+2)
-		gui.text(2,p*10,tostring(p).." "..naturename[pexp%25+1]..shiny(memory.readbyte(i+0xd), memory.readbyte(i+0xe)))
-		p = p+1
+	for i = (partystart+0xe), (partystart + 0xe + partysize * 0x2c), 0x2c do
+		pexp =  0x10000 * mbyte(i) + 0x100 * mbyte(i + 1) + mbyte(i + 2)
+		gui.text(2 ,p * 10, tostring(p).." "..naturename[pexp % 25 + 1]..shiny(mbyte(i + 0xd), mbyte(i + 0xe)))
+		p = p + 1
 	end
 	emu.frameadvance()
 end

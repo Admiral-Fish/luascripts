@@ -1,4 +1,7 @@
-local version = memory.readword(0x14e)
+local mbyte = memory.readbyte
+local mword = memory.readword
+
+local version = mword(0x14e)
 local flag_addr = 0xc027
 local base_address
 local atkdef
@@ -26,7 +29,7 @@ else
 end
 
 
-function shiny(atkdef,spespc)
+function shiny(atkdef, spespc)
 	if spespc == 0xAA then
 		if atkdef == 0x2A or atkdef == 0x3A or atkdef == 0x6A or atkdef == 0x7A or atkdef == 0xAA or atkdef == 0xBA or atkdef == 0xEA or atkdef == 0xFA then
 			return true
@@ -50,24 +53,22 @@ while true do
 	spespc = 0
 	savestate.save(state)
 
-	while memory.readbyte(flag_addr)~=0xf0 do
+	while memory.readbyte(flag_addr) ~= 0xf0 do
 		joypad.set(1, {A=false})
 		vba.frameadvance()
-		atkdef = memory.readbyte(base_address)
-		spespc = memory.readbyte(base_address+1)
+		atkdef = mbyte(base_address)
+		spespc = mbyte(base_address + 1)
 	end
-	if shiny(atkdef,spespc) then
+	if shiny(atkdef, spespc) then
 		print("Shiny!!! Script stopped.")
-		print(string.format("atk: %d", math.floor(atkdef/16)))
-		print(string.format("def: %d", atkdef%16))
-		print(string.format("spe: %d", math.floor(spespc/16)))
-		print(string.format("spc: %d", spespc%16))
+		print(string.format("atk: %d", math.floor(atkdef / 16)))
+		print(string.format("def: %d", atkdef % 16))
+		print(string.format("spe: %d", math.floor(spespc / 16)))
+		print(string.format("spc: %d", spespc % 16))
 		savestate.save(state)
 		break
 	else
 		print("discarded")
 		savestate.load(state)
 	end
-
-
 end

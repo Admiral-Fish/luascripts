@@ -1,10 +1,10 @@
 --rewritten /u/itsprofoak lua script, more compact code with automatic check version
 naturename={
-	 "Hardy","Lonely","Brave","Adamant","Naughty",
-	 "Bold","Docile","Relaxed","Impish","Lax",
-	 "Timid","Hasty","Serious","Jolly","Naive",
-	 "Modest","Mild","Quiet","Bashful","Rash",
-	 "Calm","Gentle","Sassy","Careful","Quirky"}
+	"Hardy","Lonely","Brave","Adamant","Naughty",
+	"Bold","Docile","Relaxed","Impish","Lax",
+	"Timid","Hasty","Serious","Jolly","Naive",
+	"Modest","Mild","Quiet","Bashful","Rash",
+	"Calm","Gentle","Sassy","Careful","Quirky"}
 
 function shiny(atkdef,spespc)
 	if spespc == 0xAA then

@@ -34,27 +34,34 @@ if region == 0x45 then
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Sapphire detected")
 	elseif region == 0x4A then
+    wild = 0x030044F0 -- (or party?)
 		print("JPN Sapphire detected")
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Ruby detected")
 	elseif region == 0x4A then
+    wild = 0x030044F0 -- (or party?)
 		print("JPN Ruby detected")
 	end
 elseif version == 0x45 then
 	if region == 0x45 then
+  print(works)
 		party = 0x020244EC
 		wild = 0x02024744
+    -- local rngframe=0x020249C0 found this for frame
 		print("USA Emerald detected")
 	elseif region == 0x49 then
 		print("ITA/FRE/GER Emerald detected")
 	elseif region == 0x4A then
 		party = 0x02024190
+    wild = 0x020243E8
 		print("JPN Emerald detected")
 	end
 elseif region == 0x45 then
 	if version == 0x52 or version == 0x47 then
 		party = 0x02024284
 		wild = 0x0202402C
+    -- party = 0x020241e4 LeafGreen location
+    tid = 0x02024288
 		print("USA FireRed/LeafGreen detected")
 	elseif region == 0x49 then
 		print("ITA/FRE/GER FireRed detected")
